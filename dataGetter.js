@@ -111,48 +111,92 @@ module.exports = class {
     }
 
     const reqBodyKeys = Object.keys(req.body);
+    console.log(reqBodyKeys.length);
 
-    // switch case
-    if (reqBodyKeys.length) {
-      this.tours.map((el) => {
-        if (el.id === id) {
-          reqBodyKeys.map((reqKey) => {
-            delete el[reqKey];
-          });
-        }
-      });
+    switch (reqBodyKeys.length) {
+      case 0:
+        this.tours.map((el, n) => {
+          if (el.id === id) {
+            const updTours = [
+              ...this.tours.slice(0, n),
+              ...this.tours.slice(n + 1),
+            ];
 
-      fs.writeFile(
-        `${__dirname}/dev-data/data/tours-simple.json`,
-        JSON.stringify(this.tours),
-        (err) => {
-          res.status(204).json({
-            status: 'success',
-            data: null,
-          });
-        }
-      );
-    } else {
-      this.tours.map((el, n) => {
-        if (el.id === id) {
-          const updTours = [
-            ...this.tours.slice(0, n),
-            ...this.tours.slice(n + 1),
-          ];
+            fs.writeFile(
+              `${__dirname}/dev-data/data/tours-simple.json`,
+              JSON.stringify(updTours),
+              (err) => {
+                res.status(204).json({
+                  status: 'success',
+                  data: null,
+                });
+              }
+            );
+            return;
+          }
+        });
+        break;
+      default:
+        this.tours.map((el) => {
+          if (el.id === id) {
+            reqBodyKeys.map((reqKey) => {
+              delete el[reqKey];
+            });
+          }
+        });
 
-          fs.writeFile(
-            `${__dirname}/dev-data/data/tours-simple.json`,
-            JSON.stringify(updTours),
-            (err) => {
-              res.status(204).json({
-                status: 'success',
-                data: null,
-              });
-            }
-          );
-          return;
-        }
-      });
+        fs.writeFile(
+          `${__dirname}/dev-data/data/tours-simple.json`,
+          JSON.stringify(this.tours),
+          (err) => {
+            res.status(204).json({
+              status: 'success',
+              data: null,
+            });
+          }
+        );
     }
+
+    // if (reqBodyKeys.length) {
+    //   this.tours.map((el) => {
+    //     if (el.id === id) {
+    //       reqBodyKeys.map((reqKey) => {
+    //         delete el[reqKey];
+    //       });
+    //     }
+    //   });
+
+    //   fs.writeFile(
+    //     `${__dirname}/dev-data/data/tours-simple.json`,
+    //     JSON.stringify(this.tours),
+    //     (err) => {
+    //       res.status(204).json({
+    //         status: 'success',
+    //         data: null,
+    //       });
+    //     }
+    //   );
+    // } else {
+    //   this.tours.map((el, n) => {
+    //     if (el.id === id) {
+    //       const updTours = [
+    //         ...this.tours.slice(0, n),
+    //         ...this.tours.slice(n + 1),
+    //       ];
+
+    //       fs.writeFile(
+    //         `${__dirname}/dev-data/data/tours-simple.json`,
+    //         JSON.stringify(updTours),
+    //         (err) => {
+    //           res.status(204).json({
+    //             status: 'success',
+    //             data: null,
+    //           });
+    //         }
+    //       );
+    //       return;
+    //     }
+    //   });
+    // }
   };
 };
