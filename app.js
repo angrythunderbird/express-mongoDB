@@ -15,6 +15,8 @@ app
   .patch(getData.updateTour)
   .delete(getData.removeTour);
 
+app.route('/api/v1/users').get(getData.getAllUsers);
+
 const port = 3000;
 
 app.listen(port, () => {
