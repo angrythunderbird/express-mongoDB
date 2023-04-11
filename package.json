@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/angrythunderbird/Express.git"
+    "url": "git+https://github.com/angrythunderbird/express-mongoDB.git"
   },
   "keywords": [
     "node",
@@ -18,9 +18,9 @@
   "author": "Albert",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/angrythunderbird/Express/issues"
+    "url": "https://github.com/angrythunderbird/express-mongoDB/issues"
   },
-  "homepage": "https://github.com/angrythunderbird/Express#readme",
+  "homepage": "https://github.com/angrythunderbird/express-mongoDB#readme",
   "dependencies": {
     "express": "^4.18.2"
   }
