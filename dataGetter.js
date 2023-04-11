@@ -37,7 +37,7 @@ module.exports = class {
   createTour = (req, res) => {
     const newId = this.tours[this.tours.length - 1].id + 1;
     // Refactor to spread syntax
-    const newTour = Object.assign({ id: newId }, req.body);
+    const newTour = { id: newId, ...req.body };
 
     this.tours.push(newTour);
 
