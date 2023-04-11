@@ -156,47 +156,12 @@ module.exports = class {
           }
         );
     }
+  };
 
-    // if (reqBodyKeys.length) {
-    //   this.tours.map((el) => {
-    //     if (el.id === id) {
-    //       reqBodyKeys.map((reqKey) => {
-    //         delete el[reqKey];
-    //       });
-    //     }
-    //   });
-
-    //   fs.writeFile(
-    //     `${__dirname}/dev-data/data/tours-simple.json`,
-    //     JSON.stringify(this.tours),
-    //     (err) => {
-    //       res.status(204).json({
-    //         status: 'success',
-    //         data: null,
-    //       });
-    //     }
-    //   );
-    // } else {
-    //   this.tours.map((el, n) => {
-    //     if (el.id === id) {
-    //       const updTours = [
-    //         ...this.tours.slice(0, n),
-    //         ...this.tours.slice(n + 1),
-    //       ];
-
-    //       fs.writeFile(
-    //         `${__dirname}/dev-data/data/tours-simple.json`,
-    //         JSON.stringify(updTours),
-    //         (err) => {
-    //           res.status(204).json({
-    //             status: 'success',
-    //             data: null,
-    //           });
-    //         }
-    //       );
-    //       return;
-    //     }
-    //   });
-    // }
+  getAllUsers = (req, res) => {
+    res.status(500).json({
+      status: 'error',
+      message: 'No request handler yet',
+    });
   };
 };
