@@ -156,15 +156,13 @@ const removeTour = (req, res) => {
   }
 };
 
-app.get('/api/v1/tours', getAllTours);
+app.route('/api/v1/tours').get(getAllTours).post(createTour);
 
-app.get('/api/v1/tours/:id', getTourByID);
-
-app.post('/api/v1/tours', createTour);
-
-app.patch('/api/v1/tours/:id', updateTour);
-
-app.delete('/api/v1/tours/:id', removeTour);
+app
+  .route('/api/v1/tours/:id')
+  .get(getTourByID)
+  .patch(updateTour)
+  .delete(removeTour);
 
 const port = 3000;
 
