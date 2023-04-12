@@ -1,11 +1,11 @@
-const GetApiData = require('../dataGetter');
+const userController = require('../controllers/userController');
 const express = require('express');
 
 const router = express.Router();
-const getData = new GetApiData();
+const getUser = new userController();
 
-router.route('/').get(getData.getAllUsers).patch(getData.createUser);
+router.route('/').get(getUser.getAllUsers).patch(getUser.createUser);
 
-router.route('/:id').get(getData.getUserByID);
+router.route('/:id').get(getUser.getUserByID);
 
 module.exports = router;

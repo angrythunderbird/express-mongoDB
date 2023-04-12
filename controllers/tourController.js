@@ -2,10 +2,8 @@ const fs = require('fs');
 
 module.exports = class {
   tours = JSON.parse(
-    fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
+    fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
   );
-
-  users = JSON.parse(fs.readFileSync(`${__dirname}/dev-data/data/users.json`));
 
   getAllTours = (req, res) => {
     res.status(200).json({
@@ -44,7 +42,7 @@ module.exports = class {
     this.tours.push(newTour);
 
     fs.writeFile(
-      `${__dirname}/dev-data/data/tours-simple.json`,
+      `${__dirname}/../dev-data/data/tours-simple.json`,
       JSON.stringify(this.tours),
       (err) => {
         res.status(201).json({
@@ -80,7 +78,7 @@ module.exports = class {
     });
 
     fs.writeFile(
-      `${__dirname}/dev-data/data/tours-simple.json`,
+      `${__dirname}/../dev-data/data/tours-simple.json`,
       JSON.stringify(this.tours),
       (err) => {
         res.status(200).json({
@@ -125,7 +123,7 @@ module.exports = class {
             ];
 
             fs.writeFile(
-              `${__dirname}/dev-data/data/tours-simple.json`,
+              `${__dirname}/../dev-data/data/tours-simple.json`,
               JSON.stringify(updTours),
               (err) => {
                 res.status(204).json({
@@ -148,7 +146,7 @@ module.exports = class {
         });
 
         fs.writeFile(
-          `${__dirname}/dev-data/data/tours-simple.json`,
+          `${__dirname}/../dev-data/data/tours-simple.json`,
           JSON.stringify(this.tours),
           (err) => {
             res.status(204).json({
@@ -158,55 +156,5 @@ module.exports = class {
           }
         );
     }
-  };
-
-  getAllUsers = (req, res) => {
-    res.status(200).json({
-      status: 'success',
-      results: this.users.length,
-      data: {
-        users: this.users,
-      },
-    });
-  };
-
-  getUserByID = (req, res) => {
-    const id = req.params.id * 1;
-    const user = this.users[id - 1];
-
-    if (!user) {
-      return res.status(404).json({
-        status: 'fail',
-        message: 'Invalid ID',
-      });
-    }
-
-    res.status(200).json({
-      status: 'success',
-      data: {
-        user,
-      },
-    });
-  };
-
-  createUser = (req, res) => {
-    const newId = this.users[this.users.length - 1].id + 1;
-
-    const newUser = { id: newId, ...req.body };
-
-    this.users.push(newUser);
-
-    fs.writeFile(
-      `${__dirname}/dev-data/data/users.json`,
-      JSON.stringify(this.users),
-      (err) => {
-        res.status(201).json({
-          status: 'success',
-          data: {
-            user: newUser,
-          },
-        });
-      }
-    );
   };
 };
