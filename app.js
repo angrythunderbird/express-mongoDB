@@ -10,8 +10,4 @@ app.use(express.json());
 app.use('/api/v1/tours', routerTours);
 app.use('/api/v1/users', routerUsers);
 
-const port = 3000;
-
-app.listen(port, () => {
-  console.log(`App running on port ${port}`);
-});
+module.exports = app;
