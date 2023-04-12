@@ -1,21 +1,24 @@
-const GetApiData = require('./dataGetter');
-const fs = require('fs');
 const express = require('express');
 
-const getData = new GetApiData();
+const routerTours = require('./routes/routerTours');
+const routerUsers = require('./routes/routerUsers');
+
 const app = express();
 
 app.use(express.json());
 
-app.route('/api/v1/tours').get(getData.getAllTours).post(getData.createTour);
+app.use('/api/v1/tours', routerTours);
+app.use('/api/v1/users', routerUsers);
 
-app
-  .route('/api/v1/tours/:id')
-  .get(getData.getTourByID)
-  .patch(getData.updateTour)
-  .delete(getData.removeTour);
+// app.route('/api/v1/tours').get(getData.getAllTours).post(getData.createTour);
 
-app.route('/api/v1/users').get(getData.getAllUsers);
+// app
+//   .route('/api/v1/tours/:id')
+//   .get(getData.getTourByID)
+//   .patch(getData.updateTour)
+//   .delete(getData.removeTour);
+
+// app.route('/api/v1/users').get(getData.getAllUsers);
 
 const port = 3000;
 
