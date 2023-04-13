@@ -5,6 +5,20 @@ module.exports = class {
     fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
   );
 
+  checkID = (req, res, next, val) => {
+    const id = req.params.id * 1;
+
+    const tour = this.tours.find((el) => el.id === id);
+
+    if (req.params.id * 1 > this.tours.length || !tour) {
+      return res.status(404).json({
+        status: 'fail',
+        message: 'Invalid ID',
+      });
+    }
+    next();
+  };
+
   getAllTours = (req, res) => {
     res.status(200).json({
       status: 'success',
@@ -19,13 +33,6 @@ module.exports = class {
     const id = req.params.id * 1;
     const tour = this.tours.find((el) => el.id === id);
 
-    if (!tour) {
-      return res.status(404).json({
-        status: 'fail',
-        message: 'Invalid ID',
-      });
-    }
-
     res.status(200).json({
       status: 'success',
       data: {
@@ -36,7 +43,6 @@ module.exports = class {
 
   createTour = (req, res) => {
     const newId = this.tours[this.tours.length - 1].id + 1;
-    // Refactor to spread syntax
     const newTour = { id: newId, ...req.body };
 
     this.tours.push(newTour);
@@ -57,15 +63,7 @@ module.exports = class {
 
   updateTour = (req, res) => {
     const id = req.params.id * 1;
-
     const tour = this.tours.find((el) => el.id === id);
-
-    if (!tour) {
-      return res.status(404).json({
-        status: 'fail',
-        message: 'Invalid ID',
-      });
-    }
 
     const reqBodyKeys = Object.keys(req.body);
 
@@ -93,25 +91,9 @@ module.exports = class {
 
   removeTour = (req, res) => {
     const id = req.params.id * 1;
-
     const tour = this.tours.find((el) => el.id === id);
 
-    if (req.params.id * 1 > this.tours.length) {
-      res.status(404).json({
-        status: 'failed',
-        message: 'Invalid ID',
-      });
-    }
-
-    if (!tour) {
-      return res.status(404).json({
-        status: 'fail',
-        message: 'Invalid ID',
-      });
-    }
-
     const reqBodyKeys = Object.keys(req.body);
-    console.log(reqBodyKeys.length);
 
     switch (reqBodyKeys.length) {
       case 0:

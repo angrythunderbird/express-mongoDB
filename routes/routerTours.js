@@ -4,6 +4,8 @@ const express = require('express');
 const router = express.Router();
 const getTour = new tourController();
 
+router.param('id', getTour.checkID);
+
 router.route('/').get(getTour.getAllTours).post(getTour.createTour);
 
 router
