@@ -19,6 +19,33 @@ module.exports = class {
     next();
   };
 
+  checkPostBody = (req, res, next) => {
+    const { name, price } = req.body;
+
+    console.log(name, price);
+
+    if (name === '' || price === 0) {
+      return res.status(400).json({
+        status: 'bad request',
+        message: 'check name and price data',
+      });
+    }
+
+    next();
+  };
+
+  checkPatchBody = (req, res, next) => {
+    console.log(Object.values(req.body).length);
+    if (!Object.values(req.body).length) {
+      return res.status(400).json({
+        status: 'bad request',
+        message: 'check data',
+      });
+    }
+
+    next();
+  };
+
   getAllTours = (req, res) => {
     res.status(200).json({
       status: 'success',

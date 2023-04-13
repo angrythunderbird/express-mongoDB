@@ -6,12 +6,15 @@ const getTour = new tourController();
 
 router.param('id', getTour.checkID);
 
-router.route('/').get(getTour.getAllTours).post(getTour.createTour);
+router
+  .route('/')
+  .get(getTour.getAllTours)
+  .post(getTour.checkPostBody, getTour.createTour);
 
 router
   .route('/:id')
   .get(getTour.getTourByID)
-  .patch(getTour.updateTour)
+  .patch(getTour.checkPatchBody, getTour.updateTour)
   .delete(getTour.removeTour);
 
 module.exports = router;
