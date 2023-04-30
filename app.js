@@ -1,10 +1,10 @@
 const express = require('express');
 
-const clientDB = require('./clientDB');
+// const clientDB = require('./clientDB');
 const routerTours = require('./routes/routerTours');
 const routerUsers = require('./routes/routerUsers');
 
-clientDB()
+// clientDB();
 
 const app = express();
 

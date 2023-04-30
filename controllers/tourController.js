@@ -1,24 +1,6 @@
-const fs = require('fs');
-
-const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
-);
+const clientDB = require('../clientDB');
 
 module.exports = class {
-  checkID(req, res, next, val) {
-    const id = val * 1;
-
-    const tour = tours.find((el) => el.id === id);
-
-    if (id > tours.length || !tour) {
-      return res.status(404).json({
-        status: 'fail',
-        message: 'Invalid ID',
-      });
-    }
-    next();
-  }
-
   checkPostBody(req, res, next) {
     const { name, price } = req.body;
 
@@ -43,14 +25,27 @@ module.exports = class {
     next();
   }
 
-  getAllTours(req, res) {
-    res.status(200).json({
-      status: 'success',
-      results: tours.length,
-      data: {
-        tours: tours,
-      },
-    });
+  async getAllTours(req, res) {
+    try {
+      await clientDB.connect();
+      const database = clientDB.db('t-app');
+      const toursCol = database.collection('tours');
+      const cursor = toursCol.find({});
+      const tours = await cursor.next();
+
+      await cursor.close();
+      res.status(200).json({
+        status: 'success',
+        results: await toursCol.countDocuments(),
+        data: {
+          tours,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      await clientDB.close();
+    }
   }
 
   getTourByID(req, res) {
